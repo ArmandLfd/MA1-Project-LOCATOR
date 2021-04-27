@@ -3,9 +3,9 @@ This git refers to a project for a Master Degree. You should find the report in 
 ## Requirements
   1. Python version 3.7.X or newest
   2. Some python libraries
-    a. Numpy
-    b. Matplotlib
-    c. PyQtl 5.0
+    * Numpy
+    * Matplotlib
+    * PyQtl 5.0
   3. RLC 0.3 or newest. Make sure that the configuration file needed for RLC does not change of format for newer versions.
   4. COLMAP 3.6 or newest
   5. Dataset. My datasets will be available for short period [from here](https://www.google.com).
