@@ -23,6 +23,18 @@ def extract_parameters(path):
     print("Extraction done !!!")
     return param
 
+def check_and_create(path):
+    if not os.path.exists(path):
+        if not os.path.isDir(path):
+            file_tmp = open(path,"w+")
+            close(file_tmp)
+        else:
+            os.makedirs(path)
+
+def check_essential_file(path):
+    if not os.path.exists(path):
+        exit("This file/folder should exist . . .\n File/Folder:" + path)
+
 def light_raw_img(path_to_raw_img,number_of_img,path_dst):
     print("Copying only few images . . .")
     number_of_raw_img = len(list(enumerate(os.listdir(path_to_raw_img))))
@@ -214,6 +226,18 @@ colmap_path = parameters[11]
 database_path = parameters[12]
 project_path = parameters[13]
 output_path = parameters[14]
+    #--- Check file/folders ----#
+check_essential_file(path_raw_img)
+check_and_create(path_dst)
+check_essential_file(path_param_Raytrix)
+check_and_create(path_param_dir)
+check_and_create(path_output_dir)
+check_essential_file(path_RLC)
+check_and_create(path_viewpoint)
+check_essential_file(colmap_path)
+if project_path != "None":
+    check_essential_file(project_path)
+check_and_create(output_path)
     #------ Light raw img -------#
 light_raw_img(path_raw_img,int(number_of_img),path_dst)
     #----- Build param RLC ------#
