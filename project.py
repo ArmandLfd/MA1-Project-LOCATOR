@@ -107,7 +107,7 @@ def extract_MV(path_viewpoint,path_output_MV,number_of_view):
                     if count2 == 0 or count2 == 24:
                         is_viewpoint = True
                 if number_of_view == 2 or number_of_view == 4:
-                    if count2 == 4 or count2 == 12 or count2 == 16 or count2 == 24:
+                    if count2 == 0 or count2 == 4 or count2 == 20 or count2 == 24:
                         is_viewpoint = True
                 if number_of_view == 3 or number_of_view == 4:
                     if count2 == 2 or count2 == 10 or count2 == 22 or count2 == 14:
@@ -130,9 +130,9 @@ def colmap(colmap_path,image_path,database_path,project_path,output_path):
             subprocess.call([colmap_path,"exhaustive_matcher","--project_path",project_path])
             subprocess.call([colmap_path,"mapper","--project_path",project_path])
         else:
-                subprocess.call([colmap_path,"feature_extractor","--image_path",image_path,"--database_path",database_path,"--ImageReader.camera_model","SIMPLE_RADIAL","--ImageReader.single_camera","1"])
-                subprocess.call([colmap_path,"exhaustive_matcher","--database_path",database_path])
-                subprocess.call([colmap_path,"mapper","--image_path",image_path,"--database_path",database_path,"--output_path",output_path,"--Mapper.init_min_tri_angle","10",])
+            subprocess.call([colmap_path,"feature_extractor","--image_path",image_path,"--database_path",database_path,"--ImageReader.camera_model","SIMPLE_RADIAL","--ImageReader.single_camera","1"])
+            subprocess.call([colmap_path,"exhaustive_matcher","--database_path",database_path])
+            subprocess.call([colmap_path,"mapper","--image_path",image_path,"--database_path",database_path,"--output_path",output_path,"--Mapper.init_min_tri_angle","10",])
         subprocess.call([colmap_path,"model_converter","--input_path",output_path+"0/","--output_path",output_path+"0/","--output_type","TXT"])
     except:
         exit("Error while calling COLMAP . . .")
