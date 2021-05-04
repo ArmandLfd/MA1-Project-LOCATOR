@@ -164,7 +164,7 @@ def build_coord(quad,trans):
     #return coord[2],-coord[0],-coord[1]
     return trans[2],trans[0],trans[1]
     #------------ End ------------#
-def build_trajectory(path_to_coord,path_viewpoint):
+def build_trajectory(path_to_coord):
     print("Building trajectory . . .")
     file = None
     try:
@@ -172,11 +172,12 @@ def build_trajectory(path_to_coord,path_viewpoint):
     except:
         exit("Error occured : do not suceed to open the file from ColMap.")
     #Skip commentaries
-    for i in range(4):
+    for i in range(3):
         file.readline()
+    number_of_viewpoints = file.readline().split(",")[0].split(" ")
+    number_of_viewpoints = int(number_of_viewpoints[len(number_of_viewpoints)-1])
     #Loop and skip one line after reading one
     line_read = False
-    number_of_viewpoints = len(list(enumerate(os.listdir(path_viewpoint))))
     x,y,z = np.zeros(number_of_viewpoints),np.zeros(number_of_viewpoints),np.zeros(number_of_viewpoints)
     for line in file:
         if not line_read:
@@ -249,5 +250,5 @@ extract_MV(path_viewpoint,path_output_dir,int(number_of_view))
     #---------- ColMap ----------#
 colmap(colmap_path,path_viewpoint,database_path,project_path,output_path)
     #----- Build Trajectory -----#
-build_trajectory(output_path,path_viewpoint)
+build_trajectory(output_path)
 #---------------- End ---------------#
