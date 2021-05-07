@@ -5,7 +5,7 @@ This git refers to a project for a Master Degree. You should find the report in 
   2. Some python libraries
       * Numpy
       * Matplotlib
-      * PyQtl 5.0
+      * PyQt 5.0
   3. RLC 0.3 or newest. Make sure that the configuration file needed for RLC does not change of format for newer versions.
   4. COLMAP 3.6 or newest
   5. Dataset. My datasets will be available for short period [from here](https://universitelibrebruxelles-my.sharepoint.com/:f:/g/personal/armand_losfeld_ulb_be/EmN2edlo_F9Ggkt30lonaTIBIk5vfgKL2b4EijMppNxzHA?e=P5fbd8). You should be a member of the *Free University of Brussels* to have the access.
