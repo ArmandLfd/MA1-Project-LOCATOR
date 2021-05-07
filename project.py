@@ -164,7 +164,7 @@ def build_coord(quad,trans):
     #return coord[2],-coord[0],-coord[1]
     return trans[2],trans[0],trans[1]
     #------------ End ------------#
-def build_trajectory(path_to_coord):
+def build_trajectory(path_to_coord,nb_views):
     print("Building trajectory . . .")
     file = None
     try:
@@ -176,6 +176,14 @@ def build_trajectory(path_to_coord):
         file.readline()
     number_of_viewpoints = file.readline().split(",")[0].split(" ")
     number_of_viewpoints = int(number_of_viewpoints[len(number_of_viewpoints)-1])
+    if nb_views == 0:
+        nb_views = 1
+    elif nb_views == 1:
+        nb_views = 2
+    elif nb_views == 3 or nb_views == 2:
+        nb_views = 4
+    else:
+        nb_views = 8
     #Loop and skip one line after reading one
     line_read = False
     x,y,z = np.zeros(number_of_viewpoints),np.zeros(number_of_viewpoints),np.zeros(number_of_viewpoints)
@@ -193,8 +201,15 @@ def build_trajectory(path_to_coord):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_title("3D Trajectory of the cameras")
-    ax.plot(x,y,z,label="Lines")
-    ax.scatter(x,y,z,label="Points")
+    ax.plot(x,y,z,label="Lines",color='g')
+    if nb_views != 1:
+        ax.scatter(x[0:nb_views-1],y[0:nb_views-1],z[0:nb_views-1],label="Starting Point")
+        ax.scatter(x[nb_views:len(x)-nb_views-1],y[nb_views:len(x)-nb_views-1],z[nb_views:len(x)-nb_views-1],label="Points",color='g')
+        ax.scatter(x[len(x)-nb_views:len(x)-1],y[len(x)-nb_views:len(x)-1],z[len(x)-nb_views:len(x)-1],label="End Point")
+    else:
+        ax.scatter(x[0],y[0],z[0],label="Starting Point")
+        ax.scatter(x[nb_views:len(x)-nb_views-1],y[nb_views:len(x)-nb_views-1],z[nb_views:len(x)-nb_views-1],label="Points",color='g')
+        ax.scatter(x[len(x)-1],y[len(x)-1],z[len(x)-1],label="End Point")
     ax.set_xticks([-7,-5,-2.5,0,2.5,5,7])
     ax.set_yticks([-7,-5,-2.5,0,2.5,5,7])
     ax.set_zticks([-7,-5,-2.5,0,2.5,5,7])
@@ -227,7 +242,7 @@ colmap_path = parameters[11]
 database_path = parameters[12]
 project_path = parameters[13]
 output_path = parameters[14]
-    #--- Check file/folders ----#
+ #--- Check file/folders ----#
 check_essential_file(path_raw_img)
 check_and_create(path_dst)
 check_essential_file(path_param_Raytrix)
@@ -250,5 +265,5 @@ extract_MV(path_viewpoint,path_output_dir,int(number_of_view))
     #---------- ColMap ----------#
 colmap(colmap_path,path_viewpoint,database_path,project_path,output_path)
     #----- Build Trajectory -----#
-build_trajectory(output_path)
+build_trajectory(output_path,number_of_view)
 #---------------- End ---------------#
