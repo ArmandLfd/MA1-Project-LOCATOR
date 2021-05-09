@@ -27,7 +27,7 @@ def check_and_create(path):
     if not os.path.exists(path):
         if not os.path.isDir(path):
             file_tmp = open(path,"w+")
-            close(file_tmp)
+            file_tmp.close()
         else:
             os.makedirs(path)
 
@@ -53,7 +53,7 @@ def light_raw_img(path_to_raw_img,number_of_img,path_dst):
                 count_img_copied += 1
     print("Copying images done !!!")
 
-def build_param_RLC(path_param_Raytrix,path_param_dir,path_raw_img_dir,path_output_dir,width,height): ## TODO: resolution in function of the lens -> parameter
+def build_param_RLC(path_param_Raytrix,path_param_dir,path_raw_img_dir,path_output_dir,width,height):
     print("Building parameters for RLC . . .")
     ext_param = ".xml"
     endline = "\n"
@@ -114,7 +114,7 @@ def extract_MV(path_viewpoint,path_output_MV,number_of_view):
                         is_viewpoint = True
                 if is_viewpoint:
                     dst = "image_" + str(counter) + ".png"
-                    src = path_output_MV+ filename + "/" + filename2
+                    src = path_output_MV+ "img"+str(count_dir) + "/" + filename2
                     dst = path_viewpoint + dst
                     counter += 1
                     copyfile(src, dst)
@@ -166,9 +166,15 @@ def build_coord(quad,trans):
     #------------ End ------------#
 def build_trajectory(path_to_coord,nb_views):
     print("Building trajectory . . .")
+    nb_files = len(os.listdir(path_to_coord))
+    nb_dir = 0
+    for i in range(nb_files-1,-1,-1):
+        if os.path.isdir(path_to_coord+str(i)+"/"):
+            nb_dir = i
+            break
     file = None
     try:
-        file = open(path_to_coord+"0/images.txt","rt")
+        file = open(path_to_coord+str(nb_dir)+"/images.txt","rt")
     except:
         exit("Error occured : do not suceed to open the file from ColMap.")
     #Skip commentaries
