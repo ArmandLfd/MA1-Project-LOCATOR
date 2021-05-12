@@ -11,9 +11,15 @@ def clean_line(line):
     return trans, int(nb_img)
 
 def build_array(path_to_coord,nb_views):
+    nb_files = len(os.listdir(path_to_coord))
+    nb_dir = 0
+    for i in range(nb_files-1,-1,-1):
+        if os.path.isdir(path_to_coord+str(i)+"/"):
+            nb_dir = i
+            break
     file = None
     try:
-        file = open(path_to_coord+"0/images.txt","rt")
+        file = open(path_to_coord+str(nb_dir)+"/images.txt","rt")
     except:
         exit("Error occured : do not suceed to open the file from ColMap.")
     #Skip commentaries
@@ -89,7 +95,7 @@ def calculate_slope(arrays):
             ecart_type = (ecart_type/len(x[0]))**0.5
         sigma[idx_array] = ecart_type/len(x)
         # figure
-        plt.title("Config" +str(idx_array) +": Line trajectory seen by the different views\n Average standard deviation = "+str(sigma[idx_array]))
+        # plt.title("Config" +str(idx_array) +": Line trajectory seen by the different views\n Average standard deviation = "+str(sigma[idx_array]))
         plt.show()
 
         idx_array += 1
