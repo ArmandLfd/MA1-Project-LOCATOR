@@ -20,10 +20,10 @@ python $PATH_TO_DIR/project.py $PATH_TO_CONFIG/$NAME_CONFIG
 ## Results
 Results of the three data sets.
   1. Line
-  <img align="center" src="https://user-images.githubusercontent.com/33875555/117044140-632d6980-ad0e-11eb-93d1-c1747f4af02f.png">
+  <img align="center" src="https://user-images.githubusercontent.com/33875555/117998128-e3be1c80-b343-11eb-8423-a90a8e9c30db.png">
   
   2. Rectangle
-  <img align="center" src="https://user-images.githubusercontent.com/33875555/117044178-6d4f6800-ad0e-11eb-8b50-2a55078edb3a.png">
+  <img align="center" src="https://user-images.githubusercontent.com/33875555/117998185-f0db0b80-b343-11eb-9c72-3da639c9a3f9.png">
   
   3. V
-  <img align="center" src="https://user-images.githubusercontent.com/33875555/117044158-67f21d80-ad0e-11eb-8151-35f2c32cdc94.png">
+  <img align="center" src="https://user-images.githubusercontent.com/33875555/117998233-fa647380-b343-11eb-8cb9-3912f18837b0.png">
