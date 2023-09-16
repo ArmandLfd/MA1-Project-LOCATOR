@@ -1,5 +1,9 @@
 # Localisation and Tracking of a Plenoptic Camera
 This repository refers to a project for a Master Degree. You should find the report in this git repository (report.pdf).
+
+## Copyright
+This work is under an Apache 2.0 license (see license.txt).
+
 ## Requirements
   1. Python version 3.7.X or newest
   2. Some python libraries
