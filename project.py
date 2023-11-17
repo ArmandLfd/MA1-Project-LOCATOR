@@ -25,11 +25,11 @@ def extract_parameters(path):
 
 def check_and_create(path):
     if not os.path.exists(path):
-        if not os.path.isDir(path):
+        os.makedirs(path)
+        if not os.path.isdir(path):
             file_tmp = open(path,"w+")
             file_tmp.close()
-        else:
-            os.makedirs(path)
+            
 
 def check_essential_file(path):
     if not os.path.exists(path):
@@ -45,12 +45,13 @@ def light_raw_img(path_to_raw_img,number_of_img,path_dst):
     else:
         count_img = number_of_raw_img//number_of_img
     for count, filename in enumerate(os.listdir(path_to_raw_img)):
-        if filename.split(".")[1] == "png":
-            if count%count_img == 0 or count_img < 0:
-                src = path_to_raw_img + filename
-                dst = path_dst + "image_" + str(count_img_copied) + ".png"
-                copyfile(src,dst)
-                count_img_copied += 1
+        if("." in filename):
+            if filename.split(".")[1] == "png":
+                if count%count_img == 0 or count_img < 0:
+                    src = path_to_raw_img + filename
+                    dst = path_dst + "image_" + str(count_img_copied) + ".png"
+                    copyfile(src,dst)
+                    count_img_copied += 1
     print("Copying images done !!!")
 
 def build_param_RLC(path_param_Raytrix,path_param_dir,path_raw_img_dir,path_output_dir,width,height):
@@ -126,12 +127,12 @@ def colmap(colmap_path,image_path,database_path,project_path,output_path):
     print("Starting to use COLMAP . . .")
     try:
         if project_path != "None":
-            subprocess.call([colmap_path,"feature_extractor","--project_path",project_path])
-            subprocess.call([colmap_path,"exhaustive_matcher","--project_path",project_path])
+            subprocess.call([colmap_path,"feature_extractor","--project_path",project_path, "--SiftExtraction.use_gpu","true","--SiftExtraction.gpu_index","0"])
+            subprocess.call([colmap_path,"exhaustive_matcher","--project_path",project_path,"--PatchMatchStereo.gpu_index","0"])
             subprocess.call([colmap_path,"mapper","--project_path",project_path])
         else:
-            subprocess.call([colmap_path,"feature_extractor","--image_path",image_path,"--database_path",database_path,"--ImageReader.camera_model","SIMPLE_RADIAL","--ImageReader.single_camera","1"])
-            subprocess.call([colmap_path,"exhaustive_matcher","--database_path",database_path])
+            subprocess.call([colmap_path,"feature_extractor","--image_path",image_path,"--database_path",database_path,"--ImageReader.camera_model","SIMPLE_RADIAL","--ImageReader.single_camera","1","--SiftExtraction.use_gpu","true","--SiftExtraction.gpu_index","0"])
+            subprocess.call([colmap_path,"exhaustive_matcher","--database_path",database_path,"--PatchMatchStereo.gpu_index","0"])
             subprocess.call([colmap_path,"mapper","--image_path",image_path,"--database_path",database_path,"--output_path",output_path,"--Mapper.init_min_tri_angle","10",])
         subprocess.call([colmap_path,"model_converter","--input_path",output_path+"0/","--output_path",output_path+"0/","--output_type","TXT"])
     except:
